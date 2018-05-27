@@ -8,14 +8,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class MessageService {
 
-  private messagesUrl = 'http://mtstest.loc/chat/messages/1';
+  private messagesUrl = 'http://mtstest.loc/chat/messages/';
 
   constructor(private http: HttpClient,
               private messageService: MessageService) {
   }
 
-  getMessages(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.messagesUrl)
+  getMessages(chatId): Observable<Message[]> {
+    return this.http.get<Message[]>(this.messagesUrl + chatId)
   }
 
 }
