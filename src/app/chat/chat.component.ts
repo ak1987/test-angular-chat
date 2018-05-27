@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Message} from "../message";
-import {MESSAGES} from "../mock-messages";
+import {MessageService} from "../message.service";
 
 @Component({
   selector: 'app-chat',
@@ -9,11 +9,17 @@ import {MESSAGES} from "../mock-messages";
 })
 export class ChatComponent implements OnInit {
 
-  messages = MESSAGES;
+  messages: Message[];
 
-  constructor() { }
+  constructor(private messageService: MessageService) {
+  }
+
+  getMessages(): void {
+    this.messages = this.messageService.getMessages();
+  }
 
   ngOnInit() {
+    this.getMessages();
   }
 
 }
