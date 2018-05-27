@@ -1,3 +1,5 @@
-<p>
-  chatlist works!
-</p>
+<ul>
+    <li *ngFor="let number of [1,2,3,4]">
+        <a href="/chat/{{number}}">Chat room #{{number}}</a>
+    </li>
+</ul>
