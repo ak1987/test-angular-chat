@@ -1,21 +1,33 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {Message} from "./message";
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
+import { WebsocketService } from './websocket.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+const CHAT_URL = 'ws://mtstest.loc:8080/';
+
+export interface Message {
+  type: string,
+  message: string,
+  userId: string,
+  date: string,
+  userName: string
+}
+
+@Injectable()
 export class MessageService {
+  public messages: Subject<Message>;
 
-  private messagesUrl = 'http://mtstest.loc/chat/messages/';
-
-  constructor(private http: HttpClient,
-              private messageService: MessageService) {
+  constructor(wsService: WebsocketService) {
+    this.messages = <Subject<Message>>wsService
+      .connect(CHAT_URL)
+      .map((response: MessageEvent): Message => {
+        let data = JSON.parse(response.data);
+        return {
+          type: data.type,
+          message: data.message,
+          userId: data.user_id,
+          userName: data.user_name,
+          date: data.date,
+        }
+      });
   }
-
-  getMessages(chatId): Observable<Message[]> {
-    return this.http.get<Message[]>(this.messagesUrl + chatId)
-  }
-
 }

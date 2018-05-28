@@ -3,4 +3,5 @@ export class Message {
   user_name: string;
   text: string;
   datetime: string;
+  type?: string = 'message';
 }
