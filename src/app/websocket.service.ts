@@ -6,9 +6,9 @@ export class WebsocketService {
   constructor() {
   }
 
-  private subject: Rx.Subject;
+  private subject: Rx.Subject<MessageEvent>;
 
-  public connect(url): Rx.Subject {
+  public connect(url): Rx.Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);
       console.log("Successfully connected: " + url);
@@ -16,11 +16,11 @@ export class WebsocketService {
     return this.subject;
   }
 
-  private create(url): Rx.Subject {
+  private create(url): Rx.Subject<MessageEvent> {
     let ws = new WebSocket(url);
 
     let observable = Rx.Observable.create(
-      (obs: Rx.Observer) => {
+      (obs: Rx.Observer<MessageEvent>) => {
         ws.onmessage = obs.next.bind(obs);
         ws.onerror = obs.error.bind(obs);
         ws.onclose = obs.complete.bind(obs);

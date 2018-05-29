@@ -1,6 +1,6 @@
 export class Message {
-  user_id: number;
-  user_name: string;
+  userId: number;
+  userName: string;
   text: string;
   datetime: string;
   type?: string = 'message';

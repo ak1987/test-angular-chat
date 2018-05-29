@@ -5,11 +5,13 @@ import { WebsocketService } from './websocket.service';
 const CHAT_URL = 'ws://mtstest.loc:8080/';
 
 export interface Message {
-  type: string,
-  message: string,
-  userId: string,
-  date: string,
-  userName: string
+  type?: string,
+  msg? : string,
+  action?: string,
+  message?: string,
+  userId?: string,
+  date?: string,
+  userName?: string
 }
 
 @Injectable()
